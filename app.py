@@ -40,6 +40,7 @@ janela = ttk.Window()
 janela.geometry("530x770")
 janela.configure(bg=co0)
 janela.title("RegisTrock - Brian Motta")
+janela.iconbitmap("./RT.ico")
 
 
 style = ttk.Style()
