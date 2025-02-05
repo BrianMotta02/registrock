@@ -1,13 +1,15 @@
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from PIL import Image, ImageTk
-from back import minimizar, tempo
+from back import tempo, salvar, visualizar
 
-def chamar_minimizar(janela):
-    minimizar(janela)
+# Função para chamar minimizar e configurar o tempo de intervalo
+def chamar_minimizar():
+    janela.iconify()
     valor = e_intervalo.get()
-    tempo(valor, janela)  # Agora passando a janela principal
+    tempo(valor, janela)  # Agora passando a janela corretamente
 
+# Função para exibir o campo de descrição e a janela de visualização
 def on_focus_in(event):
     if e_intervalo.get() == "Ex: 1h OU 15m":
         e_intervalo.delete(0, "end")
@@ -18,13 +20,18 @@ def on_focus_out(event):
         e_intervalo.insert(0, "Ex: 1h OU 15m")
         e_intervalo.configure(foreground="gray")
 
+# Função para visualizar os screenshots e suas descrições
+def visualizar_log():
+    visualizar()
+
+# Função principal de interface
 co0 = "#000000"  # Preto absoluto
 
 # Janela principal
 janela = ttk.Window()
 janela.geometry("530x770")
 janela.configure(bg=co0)
-janela.title("RegisTrock")
+janela.title("RegisTrock - Brian Motta")
 
 # Estilo
 style = ttk.Style()
@@ -52,10 +59,14 @@ e_intervalo = ttk.Entry(frame_corpo, style="preto.TEntry", font=("Arial", 11))
 e_intervalo.place(relx=0.5, rely=0.42, anchor="center", width=250, height=40)
 
 # Botão para iniciar
-botao = ttk.Button(janela, text="Iniciar", bootstyle=("primary", "outline"), width=20, command=lambda: chamar_minimizar(janela))
-botao.place(relx=0.5, rely=0.58, anchor="center", width=180, height=40)
+botao_iniciar = ttk.Button(janela, text="Iniciar", bootstyle=("primary", "outline"), width=20, command=chamar_minimizar)
+botao_iniciar.place(relx=0.37, rely=0.58, anchor="center", width=125, height=40)
 
-# Configurações iniciais
+# Botão para visualizar os logs
+botao_visualizar = ttk.Button(janela, text="Visualizar", bootstyle=("primary", "outline"), width=20, command=visualizar_log)
+botao_visualizar.place(relx=0.63, rely=0.58, anchor="center", width=125, height=40)
+
+# Configurações iniciais do Entry
 e_intervalo.insert(0, "Ex: 1h OU 15m")
 e_intervalo.bind("<FocusIn>", on_focus_in)
 e_intervalo.bind("<FocusOut>", on_focus_out)

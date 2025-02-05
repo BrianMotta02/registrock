@@ -4,13 +4,7 @@ import pyautogui
 import time
 import os
 
-lista_descricao = {}
-
 screenshot_dir = "./"
-
-
-def minimizar(janela):
-    janela.iconify()
 
 def tempo(valor, root):
     try:
@@ -19,13 +13,14 @@ def tempo(valor, root):
         elif 'm' in valor:
             tempo_segundos = int(valor.replace('m', '')) * 60  
         else:
-            tempo_segundos = int(valor)  
+            tempo_segundos = int(valor)
     except ValueError:
         print("Erro: o formato do valor fornecido não é válido.")
         return
 
-    # Usando after() para garantir que a interface seja chamada na thread principal
-    root.after(tempo_segundos * 1000, exibe_tela)
+    # Chama a função de exibição da tela e inicia novamente após o tempo estipulado
+    root.after(tempo_segundos * 1000, exibe_tela)  # Exibe a tela após o tempo
+    root.after(tempo_segundos * 1000, lambda: tempo(valor, root))  # Reaplica o ciclo após o mesmo intervalo
 
 def exibe_tela():
     # Listar arquivos que começam com "screenshot_" e terminam com ".png"
@@ -45,4 +40,13 @@ def exibe_tela():
     subprocess.run(["python", "descrever.py"])
 
 def salvar(descricao):
-    lista_descricao.append(descricao)
+    # Definindo o caminho do arquivo
+    arquivo_path = os.path.join(os.getcwd(), 'descricao.txt')
+    
+    # Abrir o arquivo em modo de adição ('a')
+    with open(arquivo_path, 'a') as arquivo:
+        # Escrever a descrição no arquivo
+        arquivo.write(descricao + '\n')  # Adiciona uma nova linha após cada descrição
+
+def visualizar():
+    subprocess.run(["python", "visualizar_log.py"])

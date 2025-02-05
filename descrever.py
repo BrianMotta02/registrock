@@ -7,6 +7,7 @@ from back import salvar
 
 def chamar_salvar():
     descricao = campo_texto.get()
+    descricao_janela.destroy()
     salvar(descricao)
 
 screenshot_dir = "./"
@@ -47,10 +48,11 @@ l_texto = ttk.Label(frame_corpo, text="Descreva o que estava fazendo:", font=("A
 l_texto.place(relx=0.5, rely=0.55, anchor="center")
 
 # Campo de texto para descrição
-campo_texto = ttk.Text(frame_corpo, height=5, width=40, font=("Arial", 12), wrap="word")
-campo_texto.place(relx=0.5, rely=0.65, anchor="center")
+campo_texto = ttk.Entry(frame_corpo, font=("Arial", 12))
+campo_texto.place(relx=0.5, rely=0.65, anchor="center", width=300)
+
 # Botão de envio
-botao_enviar = ttk.Button(frame_corpo, text="Enviar", bootstyle=("primary", "outline"), width=20, command=lambda: salvar)
+botao_enviar = ttk.Button(frame_corpo, text="Enviar", bootstyle=("primary", "outline"), width=20, command=chamar_salvar)
 botao_enviar.place(relx=0.5, rely=0.76, anchor="center")
 # Iniciar loop da janela
 descricao_janela.mainloop()
