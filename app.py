@@ -2,6 +2,14 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from PIL import Image, ImageTk
 from back import tempo, salvar, visualizar
+import os
+
+diretorio = "./"
+
+for arquivo in os.listdir(diretorio):
+    if arquivo.startswith("screenshot") or arquivo.startswith("descricao"):
+        arquivo_path = os.path.join(diretorio, arquivo)
+        os.remove(arquivo_path)
 
 
 def chamar_minimizar():
